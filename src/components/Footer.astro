@@ -1,0 +1,21 @@
+---
+const base = import.meta.env.BASE_URL;
+---
+<footer class="site-footer">
+  <div class="footer-links">
+    <a class="footer-brand" href={`${base}#top`} aria-label="Picky Pickles – zur Startseite"><img src={`${base}assets/picky-pickles-logo.png`} alt="Picky Pickles" width="200" height="44" loading="lazy" /></a>
+    <!-- Legal destinations were not supplied. Preserve the original labels without inventing pages. -->
+    <div class="legal-labels"><span>Impressum</span><span>Datenschutz</span></div>
+  </div>
+  <p>© Picky Pickles · Picky by choice.</p>
+</footer>
+<style>
+  .site-footer { padding: 32px var(--gutter); display: flex; flex-direction: column; gap: 24px; background: var(--cream); }
+  .footer-links { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; width: 100%; }
+  .footer-brand { width: 200px; flex: none; }
+  img { display: block; width: 100%; height: auto; }
+  .legal-labels { display: flex; gap: 20px; width: 240px; font-size: 15px; line-height: 1.3; }
+  .legal-labels span:first-child { width: 100px; }
+  .site-footer p { font-size: 13px; line-height: 1.3; }
+  @media (max-width: 767px) { .footer-links { flex-direction: column; gap: 0; } .footer-brand { width: 170px; } .legal-labels { width: 100%; } }
+</style>

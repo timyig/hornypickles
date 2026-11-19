@@ -1,11 +1,17 @@
 ---
 import Layout from '../layouts/Layout.astro';
+const base = import.meta.env.BASE_URL;
 ---
-
-<Layout title="Page not found | Horny Pickles" description="This page could not be found.">
-  <section aria-labelledby="headline">
-    <p class="eyebrow">404 / Page not found</p>
-    <h1 id="headline">Wrong jar.</h1>
-    <p class="intro">This page isn't here. <a href={import.meta.env.BASE_URL}>Head back home</a>.</p>
+<Layout title="Seite nicht gefunden · Picky Pickles" description="Diese Seite gibt es nicht. Entdecke die Pickles auf unserer Startseite.">
+  <section class="not-found">
+    <p class="eyebrow">404 · SEITE NICHT GEFUNDEN</p>
+    <h1>FALSCHES GLAS.</h1>
+    <p>Diese Seite gibt es leider nicht.</p>
+    <a class="pill" href={base}>Zur Startseite</a>
   </section>
 </Layout>
+<style>
+  .not-found { min-height: 65vh; padding: 64px var(--gutter); display: flex; flex-direction: column; align-items: flex-start; justify-content: center; gap: 24px; }
+  h1 { font-size: clamp(42px, 7vw, 90px); line-height: 1.1; }
+  .not-found > p:not(.eyebrow) { font-size: 20px; }
+</style>

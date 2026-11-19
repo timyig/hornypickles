@@ -1,0 +1,74 @@
+---
+const base = import.meta.env.BASE_URL;
+const isHome = Astro.url.pathname === base;
+const section = (id: string) => `${isHome ? '' : base}#${id}`;
+---
+<header class="site-header">
+  <a class="brand" href={section('top')} aria-label="Picky Pickles – zur Startseite">
+    <img src={`${base}assets/picky-pickles-logo.png`} alt="Picky Pickles" width="220" height="48" />
+  </a>
+  <nav class="header-navigation" aria-label="Hauptnavigation">
+    <div class="desktop-links">
+      <a href={section('produkte')}>Produkte</a>
+      <a href={section('ueber-uns')}>Über uns</a>
+    </div>
+    <a class="pill newsletter-link" href={section('newsletter')}>Newsletter<span> Anmeldung</span></a>
+    <button class="menu-toggle" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="mobile-navigation">
+      <span class="menu-icon" aria-hidden="true"><span></span><span></span><span></span></span>
+    </button>
+    <div id="mobile-navigation" class="mobile-navigation" hidden>
+      <a href={section('produkte')}>Produkte</a>
+      <a href={section('ueber-uns')}>Über uns</a>
+    </div>
+  </nav>
+</header>
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+  const menu = document.querySelector<HTMLElement>('#mobile-navigation');
+  const header = document.querySelector<HTMLElement>('.site-header');
+  if (toggle && menu && header) {
+    const closeMenu = () => {
+      menu.hidden = true;
+      toggle.setAttribute('aria-expanded', 'false');
+      toggle.setAttribute('aria-label', 'Menü öffnen');
+    };
+    toggle.addEventListener('click', () => {
+      const opening = menu.hidden;
+      menu.hidden = !opening;
+      toggle.setAttribute('aria-expanded', String(opening));
+      toggle.setAttribute('aria-label', opening ? 'Menü schließen' : 'Menü öffnen');
+    });
+    header.querySelectorAll<HTMLAnchorElement>('a').forEach(link => link.addEventListener('click', closeMenu));
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape' && !menu.hidden) { closeMenu(); toggle.focus(); }
+    });
+    document.addEventListener('click', event => { if (!header.contains(event.target as Node)) closeMenu(); });
+    header.addEventListener('focusout', event => { if (!header.contains(event.relatedTarget as Node)) closeMenu(); });
+    window.matchMedia('(min-width: 1024px)').addEventListener('change', closeMenu);
+  }
+</script>
+<style>
+  .site-header { position: sticky; top: 0; z-index: 10; min-height: var(--header-height); padding: 0 var(--gutter); display: flex; align-items: center; justify-content: space-between; gap: 16px; background: var(--cream); }
+  .brand { flex: none; display: block; width: 220px; }
+  .brand img { width: 100%; height: auto; display: block; }
+  .header-navigation, .desktop-links { display: flex; align-items: center; gap: 32px; }
+  .desktop-links a { font-size: 18px; line-height: 1.25; font-weight: 600; padding: 12px 0; }
+  .newsletter-link span { margin-left: .25em; }
+  .menu-toggle { display: none; background: none; border: 0; padding: 10px; width: 44px; height: 44px; color: inherit; cursor: pointer; }
+  .menu-icon { display: flex; flex-direction: column; justify-content: space-around; height: 24px; width: 24px; padding: 4px 0; }
+  .menu-icon span { display: block; width: 22px; height: 2px; background: currentColor; }
+  .mobile-navigation { position: absolute; left: 0; right: 0; top: 100%; background: var(--cream); padding: 16px var(--gutter); border-bottom: 1px solid var(--ink); }
+  .mobile-navigation a { display: block; padding: 12px 0; font-size: 18px; font-weight: 600; }
+  @media (max-width: 1023px) {
+    .brand { width: 180px; }
+    .header-navigation { gap: 8px; }
+    .desktop-links, .newsletter-link span { display: none; }
+    .menu-toggle { display: block; }
+  }
+  @media (max-width: 767px) {
+    .site-header { gap: 8px; }
+    .brand { width: 145px; }
+    .newsletter-link { padding-inline: 14px; }
+  }
+  @media (max-width: 374px) { .brand { width: 125px; } .newsletter-link { font-size: 15px; padding-inline: 10px; } }
+</style>

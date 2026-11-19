@@ -1,6 +1,6 @@
-# Horny Pickles
+# Picky Pickles
 
-An Astro static website deployed to GitHub Pages. The initial site has a coming-soon homepage and a custom 404 page.
+An Astro static website implementing the revised Bold Table design, deployed to GitHub Pages. The landing page includes responsive navigation, brand story, meal inspiration, four original product jars, and the newsletter visual preview.
 
 **Site:** https://timyig.github.io/hornypickles/
 
@@ -77,3 +77,11 @@ docker buildx build --target export --output type=local,dest=dist \
 For GitHub Actions, add the same values as `build-args` on the Docker build step. For a custom domain, configure the domain in GitHub Pages and set its DNS records at your DNS provider. The default GitHub Pages URL needs no DNS configuration.
 
 Deployment reference: [Astro's GitHub Pages guide](https://docs.astro.build/en/guides/deploy/github/).
+
+## Design and integration notes
+
+The implementation follows the [revised Figma design](https://www.figma.com/design/hLbs5wMrIH4bVaDwCaWfYA?node-id=28-9) at 375, 390, 768, 834, 1024, and 1440 pixels. The approved temporary fonts, Anton and Barlow, are self-hosted; their Open Font Licenses are in `public/fonts/`. Lucide icon licensing is in `public/assets/lucide-LICENSE.txt`.
+
+Supplied photos are preserved in `src/assets/` and Astro generates responsive WebP derivatives. Product PNGs in `public/assets/` retain their original bytes; the `Jar` component normalizes transparent margins to align the visible jars.
+
+The newsletter is a disabled, labeled visual preview. Integrate the original Brevo HTML/CSS/JavaScript in the future CMS before enabling subscription. No subscription data is collected or submitted here. The original Impressum and Datenschutz footer labels are preserved as text until real legal destinations are supplied.
